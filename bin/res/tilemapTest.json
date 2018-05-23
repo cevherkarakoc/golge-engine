@@ -1,0 +1,29 @@
+{ "height":3,
+ "infinite":false,
+ "layers":[
+        {
+         "data":[1, 1, 1, 1, 1, 1, 1, 1, 1],
+         "height":3,
+         "name":"Desen Katman\u0131 1",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":3,
+         "x":0,
+         "y":0
+        }],
+ "nextobjectid":1,
+ "orientation":"isometric",
+ "renderorder":"right-down",
+ "tiledversion":"1.1.5",
+ "tileheight":256,
+ "tilesets":[
+        {
+         "firstgid":1,
+         "source":"ground.tsx"
+        }],
+ "tilewidth":512,
+ "type":"map",
+ "version":1,
+ "width":3
+}
