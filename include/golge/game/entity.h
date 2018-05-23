@@ -32,17 +32,24 @@ public:
   void addComponent(ComponentSharedPtr newComponent);
   void setScene(SceneSharedPtr scene);
   void setParent(SharedPtr parent);
-  ComponentSharedPtr find(const std::string &name) const;
+
+  template <class ComponentClass>
+  std::shared_ptr<ComponentClass> find(const std::string &name) const
+  {
+    auto component = m_components.find(name)->second;
+    return std::dynamic_pointer_cast<ComponentClass>(component);
+  }
 
   inline std::string getName() { return m_name; }
   inline SceneSharedPtr getScene() { return m_scene; }
   inline SharedPtr getParent() { return m_parent; }
+
 private:
   SceneSharedPtr m_scene;
   SharedPtr m_parent;
   std::string m_name;
   CompMap m_components;
 };
-}
+} // namespace golge
 
 #endif
