@@ -38,7 +38,7 @@ void mouse_callback(GLFWwindow *window, double xpos, double ypos);
 void processInput(GLFWwindow *window);
 
 float deltaTime = 0.0f;																								// 1 1 0
-std::shared_ptr<Camera> camera(new Camera(vec3(0.0, 0.0, 10.0), vec3(1.0, 1.0, 0.0), 45.0f,
+std::shared_ptr<Camera> camera(new Camera(vec3(0.0, 0.0, 10.0), vec3(0.0, 1.0, 0.0), 45.0f,
 																					(float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f, -90.0f, 0.0f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
@@ -83,37 +83,46 @@ int main(void)
 	float lastFrame = 0.0f;
 
 	// Textures
-	auto texTileset = Texture::create("./res/ground.png", 1.0);
+	auto texCenter = Texture::create("./res/center.png", 1.0);
+	auto texTileset = Texture::create("./res/testset.png", 2.0);
 	std::cout << "Tileset : " << texTileset->getWidth() << " x " << texTileset->getHeight() << std::endl;
 
 	//Shaders
+	auto upShader = Shader::create("./res/shaders/up");
 	auto basicShader = Shader::create("./res/shaders/basic");
 
 	//Materials
+	auto matCenter = Material::create(upShader, texCenter);
 	auto matTileset = Material::create(basicShader, texTileset);
 
 	//Tilemap
-	auto testTilemap = Tilemap::create("./res/tilemapTest.json");
+	auto testTilemap = Tilemap::create("./res/testmap.json");
 
 	//Create Scene
 	auto mainScene = Scene::create();
 	mainScene->setActiveCamera(camera);
 
 	//Create Entities
+	auto center = Entity::create("center");
 	auto tile = Entity::create("tile");
 
 	//Add entities to the scene
+	mainScene->addEntity(center);
 	mainScene->addEntity(tile);
 
 	// Components
+	Component::SharedPtr transformC(new TransformComponent());
+	Component::SharedPtr rendererC(new SpriteRenderer(matCenter, 0.0));
+
 	Component::SharedPtr transform(new TransformComponent());
-	//Component::SharedPtr renderer(new SpriteRenderer(matTileset, 0.0));
 	Component::SharedPtr renderer(new TileMapRenderer(testTilemap, matTileset));
 
 	std::dynamic_pointer_cast<TransformComponent>(transform)->getTransform()->setScale(1.0, 1.0);
-	std::dynamic_pointer_cast<TransformComponent>(transform)->getTransform()->setRotation(-45.0);
+	//std::dynamic_pointer_cast<TransformComponent>(transform)->getTransform()->setRotation(-45.0);
 
 	//Adding Components
+	center->addComponent(transformC);
+	center->addComponent(rendererC);
 	tile->addComponent(transform);
 	tile->addComponent(renderer);
 

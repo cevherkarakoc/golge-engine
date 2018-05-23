@@ -31,14 +31,16 @@ Tilemap::Tilemap(const std::string &fileName)
   }
 }
 
-int Tilemap::getTileNumber(int index, int &materialIndex) const {
-  int i = 0, baseValue = 0;
+int Tilemap::getTileNumber(int layer, int index, int &materialIndex) const {
+  int i = 0, baseValue = 1;
+  /*
   for(auto const& firstId: m_firstIds) {
     baseValue = firstId;
     if(index >= firstId) break;
     i++;
   }
+  */
   materialIndex = i;
 
-  return (m_layers[0][index] - baseValue);
+  return (m_layers[layer][index] - baseValue);
 }

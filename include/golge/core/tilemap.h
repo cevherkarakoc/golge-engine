@@ -16,9 +16,10 @@ public:
   static SharedPtr create(const std::string &fileName);
 
   Tilemap(const std::string &fileName);
-  int getTileNumber(int index, int &materialIndex) const;
+  int getTileNumber(int layer, int index, int &materialIndex) const;
   int inline getWidth() const { return m_width; };
   int inline getHeight() const { return m_height; };
+  int inline getLayerCount() const { return m_layers.size(); };
 private:
   int m_width;
   int m_height;
