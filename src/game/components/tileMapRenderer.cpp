@@ -30,7 +30,7 @@ void TileMapRenderer::init()
         int tileNumber = m_tilemap->getTileNumber(l, index, materialIndex);
         if (tileNumber < 0)
           continue;
-        std::cout << i << " " << j << " -> " << index << " : " << tileNumber << std::endl;
+        
         auto tile = Entity::create("tile" + std::to_string(index));
 
         Component::SharedPtr transform(new TransformComponent());
@@ -41,6 +41,7 @@ void TileMapRenderer::init()
 
         y += height * 0.25;
         std::dynamic_pointer_cast<TransformComponent>(transform)->getTransform()->setPosition(x, y);
+        std::dynamic_pointer_cast<TransformComponent>(transform)->getTransform()->setScale(1.015, 1.015);
 
         tile->addComponent(transform);
         tile->addComponent(renderer);

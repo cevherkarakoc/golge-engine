@@ -55,7 +55,6 @@ int main(void)
 	/* Create a windowed mode window and its OpenGL context */
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_SAMPLES, 4);
 
 	window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Hello World", NULL, NULL);
 	if (!window)
@@ -73,11 +72,10 @@ int main(void)
 
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
-	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LEQUAL);
 	glEnable(GL_CULL_FACE);
-	glEnable(GL_MULTISAMPLE);
-
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA  );
+	
 	std::cout << "OPENGL VERSION : " << glGetString(GL_VERSION) << std::endl;
 
 	float lastFrame = 0.0f;

@@ -21,9 +21,5 @@ void main() {
 
   vec4 tex = texture(material.diffuse, texCoord);
 
-  if(tex.a < 0.25) {
-    discard;
-  }
-
   FragColor = tex;
 }
