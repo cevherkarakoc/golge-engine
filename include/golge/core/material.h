@@ -46,6 +46,8 @@ public:
 	void use(Camera::SharedPtr camera) const;
 	void updateTileNumber(float tileNumber) const;
 
+	Shader::SharedPtr inline getShader() { return m_shader;};
+
 private:
 	Shader::SharedPtr m_shader;
 	Texture::SharedPtr m_diffuse;

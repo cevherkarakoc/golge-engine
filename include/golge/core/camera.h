@@ -26,6 +26,7 @@ public:
 
   void moveForward(float speed);
   void moveRight(float speed);
+  void moveUp(float speed);
 
   void pitch(float angle);
   void yaw(float angle);
