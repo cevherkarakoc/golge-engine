@@ -38,6 +38,12 @@ void Camera::moveRight(float speed)
   calculateView();
 }
 
+void Camera::moveUp(float speed)
+{
+  m_position += m_up * speed;
+  calculateView();
+}
+
 void Camera::pitch(float angle)
 {
   m_pitch += angle;
