@@ -11,14 +11,15 @@ uniform mat4 modelMatrix;
 uniform Material material;
 
 uniform float tileNumber;
+uniform float order;
 
 in vec2 texCoord;
 in vec3 fragPos;
 
 out vec4 FragColor;
 void main() {
-  //gl_FragDepth = remap(modelMatrix[3].x, -100.0, 100.0, 0.0, 1.0) ;
-  gl_FragDepth = 0.0;
+  gl_FragDepth = remap(modelMatrix[3].y, -10.0, 10.0, 0.0, 1.0) ;
+ 
   vec4 tex = texture(material.diffuse, texCoord);
 
   if(tex.a < 0.25) {
@@ -26,4 +27,5 @@ void main() {
   }
 
   FragColor = tex;
+  //FragColor = vec4(vec3((fragPos.y+10.0)/20.0), 1.0);
 }

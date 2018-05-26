@@ -43,6 +43,10 @@ void TileMapRenderer::init()
         std::dynamic_pointer_cast<TransformComponent>(transform)->getTransform()->setPosition(x, y);
         std::dynamic_pointer_cast<TransformComponent>(transform)->getTransform()->setScale(1.015, 1.015);
 
+        float order = -1000.0;
+        if(l > 0) order = y;
+        std::dynamic_pointer_cast<SpriteRenderer>(renderer)->setOrder(order);
+
         tile->addComponent(transform);
         tile->addComponent(renderer);
         tile->setParent(m_entity);

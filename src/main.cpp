@@ -44,6 +44,8 @@ float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
 
+auto zombie = Entity::create("zombie");
+
 int main(void)
 {
 	GLFWwindow *window;
@@ -71,7 +73,8 @@ int main(void)
 	//glfwSetCursorPosCallback(window, mouse_callback);
 
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
-
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA  );
@@ -81,7 +84,7 @@ int main(void)
 	float lastFrame = 0.0f;
 
 	// Textures
-	auto texCenter = Texture::create("./res/center.png", 1.0);
+	auto texZombie = Texture::create("./res/zombie.png", 4.0);
 	auto texTileset = Texture::create("./res/testset.png", 2.0);
 	std::cout << "Tileset : " << texTileset->getWidth() << " x " << texTileset->getHeight() << std::endl;
 
@@ -90,7 +93,7 @@ int main(void)
 	auto basicShader = Shader::create("./res/shaders/basic");
 
 	//Materials
-	auto matCenter = Material::create(upShader, texCenter);
+	auto matZombie = Material::create(upShader, texZombie);
 	auto matTileset = Material::create(basicShader, texTileset);
 
 	//Tilemap
@@ -98,19 +101,21 @@ int main(void)
 
 	//Create Scene
 	auto mainScene = Scene::create();
+	auto testScene = Scene::create();
 	mainScene->setActiveCamera(camera);
+	testScene->setActiveCamera(camera);
 
 	//Create Entities
-	auto center = Entity::create("center");
+	//auto zombie = Entity::create("zombie");
 	auto tile = Entity::create("tile");
 
 	//Add entities to the scene
-	mainScene->addEntity(center);
+	testScene->addEntity(zombie);
 	mainScene->addEntity(tile);
 
 	// Components
 	Component::SharedPtr transformC(new TransformComponent());
-	Component::SharedPtr rendererC(new SpriteRenderer(matCenter, 0.0));
+	Component::SharedPtr rendererC(new SpriteRenderer(matZombie, 0.0));
 
 	Component::SharedPtr transform(new TransformComponent());
 	Component::SharedPtr renderer(new TileMapRenderer(testTilemap, matTileset));
@@ -119,12 +124,13 @@ int main(void)
 	//std::dynamic_pointer_cast<TransformComponent>(transform)->getTransform()->setRotation(-45.0);
 
 	//Adding Components
-	center->addComponent(transformC);
-	center->addComponent(rendererC);
+	zombie->addComponent(transformC);
+	zombie->addComponent(rendererC);
 	tile->addComponent(transform);
 	tile->addComponent(renderer);
 
 	mainScene->init();
+	testScene->init();
 
 	glClearColor(0.70f, 0.85f, 0.95f, 1.0f);
 	float counter = 0.0;
@@ -139,7 +145,10 @@ int main(void)
 
 			processInput(window);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+			
+			testScene->update();
 			mainScene->update();
+			
 
 			//std::dynamic_pointer_cast<SpriteRenderer>(renderer)->setTileNumber(((int)counter) % 4);
 			//std::dynamic_pointer_cast<TransformComponent>(transform)->getTransform()->setPosition(counter, 0.0);
@@ -160,14 +169,30 @@ void processInput(GLFWwindow *window)
 		glfwSetWindowShouldClose(window, true);
 
 	float cameraSpeed = 2.5f * deltaTime;
+	auto pos = zombie->find<TransformComponent>("transform")->getTransform()->getPosition();
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		camera->moveForward(cameraSpeed);
+		pos = pos + glm::vec2(0.0, 0.01);
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		camera->moveForward(-cameraSpeed);
+		pos = pos - glm::vec2(0.0, 0.01);
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		camera->moveRight(cameraSpeed);
+		pos = pos + glm::vec2(0.01, 0.0);
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+		pos = pos - glm::vec2(0.01, 0.0);
+
+	zombie->find<TransformComponent>("transform")->getTransform()->setPosition(pos);
+
+	if (glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS)
+		camera->moveForward(cameraSpeed);
+	if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS)
+		camera->moveForward(-cameraSpeed);
+	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+		camera->moveRight(cameraSpeed);
+	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
 		camera->moveRight(-cameraSpeed);
+	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+		camera->moveUp(cameraSpeed);
+	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+		camera->moveUp(-cameraSpeed);
 }
 
 void mouse_callback(GLFWwindow *window, double xpos, double ypos)
