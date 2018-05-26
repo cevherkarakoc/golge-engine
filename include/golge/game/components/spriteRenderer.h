@@ -21,10 +21,12 @@ public:
   void update();
   std::string getName() const;
   void setTileNumber(float tileNumber);
+  void setOrder(float order);
 
 private:
   Material::SharedPtr m_material;
   float m_tileNumber;
+  float m_order;
 };
 } // namespace golge
 

@@ -26,6 +26,7 @@ void SpriteRenderer::update()
   m_material->use(camera);
   m_material->model(model);
   m_material->updateTileNumber(m_tileNumber);
+  m_material->getShader()->setFloat("order", m_order);
 
   Vertex vsa[4] = {
       {vec3(-0.5, -0.5, 0), vec2(0, 1)},
@@ -50,4 +51,9 @@ std::string SpriteRenderer::getName() const
 void SpriteRenderer::setTileNumber(float tileNumber)
 {
   m_tileNumber = tileNumber;
+}
+
+void SpriteRenderer::setOrder(float order)
+{
+  m_order = order;
 }
