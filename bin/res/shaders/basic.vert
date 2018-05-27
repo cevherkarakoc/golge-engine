@@ -17,9 +17,11 @@ vec2 calculateTextureCoordinate() {
 }
 
 out vec2 texCoord;
+out vec2 orginalTexCoord;
 out vec3 normal;
 out vec3 fragPos;
 void main() {
+  orginalTexCoord = aTexCoord;
   texCoord = calculateTextureCoordinate();
   fragPos  = vec3(modelMatrix * vec4(aPosition.xy, 0.0, 1.0));
 

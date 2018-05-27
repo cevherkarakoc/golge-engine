@@ -22,10 +22,10 @@ void main() {
  
   vec4 tex = texture(material.diffuse, texCoord);
 
-  if(tex.a < 0.25) {
+  if(tex.a == 0.0) {
     discard;
   }
 
   FragColor = tex;
-  //FragColor = vec4(vec3((fragPos.y+10.0)/20.0), 1.0);
+  //FragColor = vec4(vec3(gl_FragDepth), 1.0);
 }
