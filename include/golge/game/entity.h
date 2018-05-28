@@ -3,7 +3,7 @@
 
 #include <memory>
 #include <string>
-#include <map>
+#include <unordered_map>
 
 #include <golge/game/scene.h>
 #include <golge/game/component.h>
@@ -16,7 +16,7 @@ class Component;
 using SceneSharedPtr = std::shared_ptr<Scene>;
 using ComponentSharedPtr = std::shared_ptr<Component>;
 
-using CompMap = std::map<std::string, ComponentSharedPtr>;
+using CompMap = std::unordered_map<std::string, ComponentSharedPtr>;
 using CompPair = std::pair<std::string, ComponentSharedPtr>;
 
 class Entity : public std::enable_shared_from_this<Entity>

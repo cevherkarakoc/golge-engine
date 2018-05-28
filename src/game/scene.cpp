@@ -9,19 +9,20 @@ Scene::SharedPtr Scene::create() {
 }
 
 void Scene::init() {
-  for (auto const& pair : m_graph) {
-    pair.second->init();
+  for (auto const& name : m_addingOrder) {
+    find(name)->init();
 	}
 }
 
 void Scene::update() {
-  for (auto const& pair : m_graph) {
-    pair.second->update();
+  for (auto const& name : m_addingOrder) {
+    find(name)->update();
 	}
 }
 
 void Scene::addEntity(Entity::SharedPtr newEntity) {
   newEntity->setScene(shared_from_this());
+  m_addingOrder.push_back( newEntity->getName() );
   m_graph.insert(EntityPair( newEntity->getName() , newEntity ));
 }
 

@@ -3,7 +3,8 @@
 
 #include <memory>
 #include <string>
-#include <map>
+#include <list>
+#include <unordered_map>
 #include <vector>
 
 #include <golge/game/entity.h>
@@ -15,7 +16,7 @@ namespace golge
 class Entity;
 
 using EntitySharedPtr = std::shared_ptr<Entity>;
-using EntityMap = std::map<std::string, EntitySharedPtr>;
+using EntityMap = std::unordered_map<std::string, EntitySharedPtr>;
 using EntityPair = std::pair<std::string, EntitySharedPtr>;
 using LightVector = std::vector<Light::SharedPtr>;
 
@@ -39,6 +40,7 @@ public:
 private:
   Camera::SharedPtr m_camera;
   LightVector m_lights;
+  std::list<std::string> m_addingOrder;
   EntityMap m_graph;
 };
 } // namespace golge

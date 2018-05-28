@@ -101,17 +101,16 @@ int main(void)
 
 	//Create Scene
 	auto mainScene = Scene::create();
-	auto testScene = Scene::create();
 	mainScene->setActiveCamera(camera);
-	testScene->setActiveCamera(camera);
 
 	//Create Entities
 	//auto zombie = Entity::create("zombie");
 	auto tile = Entity::create("tile");
 
 	//Add entities to the scene
-	testScene->addEntity(zombie);
+	
 	mainScene->addEntity(tile);
+	mainScene->addEntity(zombie);
 
 	// Components
 	Component::SharedPtr transformC(new TransformComponent());
@@ -130,7 +129,6 @@ int main(void)
 	tile->addComponent(renderer);
 
 	mainScene->init();
-	testScene->init();
 
 	glClearColor(0.70f, 0.85f, 0.95f, 1.0f);
 	float counter = 0.0;
@@ -146,13 +144,11 @@ int main(void)
 			processInput(window);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 			
-			testScene->update();
 			mainScene->update();
 			
 
-			//std::dynamic_pointer_cast<SpriteRenderer>(renderer)->setTileNumber(((int)counter) % 4);
-			//std::dynamic_pointer_cast<TransformComponent>(transform)->getTransform()->setPosition(counter, 0.0);
-			counter += 0.01;
+			//std::dynamic_pointer_cast<TransformComponent>(transformC)->getTransform()->setRotation(counter);
+			counter += 0.1;
 
 			glfwSwapBuffers(window);
 			glfwPollEvents();
