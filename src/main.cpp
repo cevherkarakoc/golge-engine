@@ -18,11 +18,14 @@
 
 #include <golge/game/scene.h>
 #include <golge/game/entity.h>
+#include <golge/game/inputManager.h>
 
 #include <golge/game/component.h>
 #include <golge/game/components/transformComponent.h>
 #include <golge/game/components/spriteRenderer.h>
 #include <golge/game/components/tileMapRenderer.h>
+
+#include <golge/game/components/move.h>
 
 using namespace golge;
 using glm::mat4;
@@ -33,6 +36,7 @@ const unsigned int SCR_HEIGHT = 600;
 const float TARGET_FPS = 60.0;
 const float FRAME_TIME = 1.0 / TARGET_FPS;
 
+void clearInputs();
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void mouse_callback(GLFWwindow *window, double xpos, double ypos);
 void processInput(GLFWwindow *window);
@@ -45,6 +49,10 @@ float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
 
 auto zombie = Entity::create("zombie");
+
+/**
+	* TODO: ADD Mouse Event Handler
+*/
 
 int main(void)
 {
@@ -115,6 +123,7 @@ int main(void)
 	// Components
 	Component::SharedPtr transformC(new TransformComponent());
 	Component::SharedPtr rendererC(new SpriteRenderer(matZombie, 0.0));
+	Component::SharedPtr move( new Move() );
 
 	Component::SharedPtr transform(new TransformComponent());
 	Component::SharedPtr renderer(new TileMapRenderer(testTilemap, matTileset));
@@ -125,6 +134,8 @@ int main(void)
 	//Adding Components
 	zombie->addComponent(transformC);
 	zombie->addComponent(rendererC);
+	zombie->addComponent(move);
+
 	tile->addComponent(transform);
 	tile->addComponent(renderer);
 
@@ -141,16 +152,18 @@ int main(void)
 		{
 			lastFrame = currentFrame;
 
-			processInput(window);
+			clearInputs();
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
+			processInput(window);
 			
 			mainScene->update();
-			
 
 			//std::dynamic_pointer_cast<TransformComponent>(transformC)->getTransform()->setRotation(counter);
 			counter += 0.1;
 
 			glfwSwapBuffers(window);
+			
 			glfwPollEvents();
 		}
 	}
@@ -159,23 +172,25 @@ int main(void)
 	return 0;
 }
 
+void clearInputs(){
+	InputManager::clearInputs();
+}
+
 void processInput(GLFWwindow *window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
 
 	float cameraSpeed = 2.5f * deltaTime;
-	auto pos = zombie->find<TransformComponent>("transform")->getTransform()->getPosition();
+	
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		pos = pos + glm::vec2(0.0, 0.01);
+		InputManager::SetKey("UP", 1.0);
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		pos = pos - glm::vec2(0.0, 0.01);
+		InputManager::SetKey("DOWN", 1.0);
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		pos = pos + glm::vec2(0.01, 0.0);
+		InputManager::SetKey("RIGHT", 1.0);
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		pos = pos - glm::vec2(0.01, 0.0);
-
-	zombie->find<TransformComponent>("transform")->getTransform()->setPosition(pos);
+		InputManager::SetKey("LEFT", 1.0);
 
 	if (glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS)
 		camera->moveForward(cameraSpeed);
@@ -198,8 +213,9 @@ void mouse_callback(GLFWwindow *window, double xpos, double ypos)
 		lastX = xpos;
 		lastY = ypos;
 		firstMouse = false;
+		
 	}
-
+std::cout<<lastX<<std::endl;
 	float xoffset = xpos - lastX;
 	float yoffset = lastY - ypos;
 
