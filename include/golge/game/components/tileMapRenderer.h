@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <list>
+#include <vector>
 #include <glm/glm.hpp>
 
 #include <golge/game/entity.h>
@@ -15,13 +16,13 @@ namespace golge
 class TileMapRenderer : public Component
 {
 public:
-  TileMapRenderer(Tilemap::SharedPtr tilemap, Material::SharedPtr material);
+  TileMapRenderer(Tilemap::SharedPtr tilemap, std::vector<Material::SharedPtr> materials);
   void init();
   void update();
   std::string getName() const;
 private:
   Tilemap::SharedPtr m_tilemap;
-  Material::SharedPtr m_material;
+  std::vector<Material::SharedPtr> m_materials;
   std::list<Entity::SharedPtr> m_tiles;
 };
 } // namespace golge

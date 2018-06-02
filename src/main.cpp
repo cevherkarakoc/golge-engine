@@ -94,6 +94,7 @@ int main(void)
 	// Textures
 	auto texZombie = Texture::create("./res/zombie.png", 4.0);
 	auto texTileset = Texture::create("./res/testset.png", 2.0);
+	auto texTilesetBlue = Texture::create("./res/testsetBlue.png", 2.0);
 	std::cout << "Tileset : " << texTileset->getWidth() << " x " << texTileset->getHeight() << std::endl;
 
 	//Shaders
@@ -103,6 +104,9 @@ int main(void)
 	//Materials
 	auto matZombie = Material::create(upShader, texZombie);
 	auto matTileset = Material::create(basicShader, texTileset);
+	auto matTilesetBlue = Material::create(basicShader, texTilesetBlue);
+
+	std::vector<Material::SharedPtr> tileMats{ matTileset, matTilesetBlue };
 
 	//Tilemap
 	auto testTilemap = Tilemap::create("./res/testmap.json");
@@ -126,7 +130,7 @@ int main(void)
 	Component::SharedPtr move( new Move() );
 
 	Component::SharedPtr transform(new TransformComponent());
-	Component::SharedPtr renderer(new TileMapRenderer(testTilemap, matTileset));
+	Component::SharedPtr renderer(new TileMapRenderer(testTilemap, tileMats));
 
 	std::dynamic_pointer_cast<TransformComponent>(transform)->getTransform()->setScale(1.0, 1.0);
 	//std::dynamic_pointer_cast<TransformComponent>(transform)->getTransform()->setRotation(-45.0);

@@ -7,12 +7,15 @@
 
 using namespace golge;
 
-TileMapRenderer::TileMapRenderer(Tilemap::SharedPtr tilemap, Material::SharedPtr material)
+TileMapRenderer::TileMapRenderer(Tilemap::SharedPtr tilemap, std::vector<Material::SharedPtr> materials)
 {
   m_tilemap = tilemap;
-  m_material = material;
+  m_materials = materials;
 }
 
+/**
+ * TODO : ADD Multi Material Support
+ */
 void TileMapRenderer::init()
 {
   int materialIndex = 0;
@@ -28,13 +31,14 @@ void TileMapRenderer::init()
       {
         int index = i * width + j;
         int tileNumber = m_tilemap->getTileNumber(l, index, materialIndex);
+        
         if (tileNumber < 0)
           continue;
         
         auto tile = Entity::create("tile" + std::to_string(index));
 
         Component::SharedPtr transform(new TransformComponent());
-        Component::SharedPtr renderer(new SpriteRenderer(m_material, tileNumber));
+        Component::SharedPtr renderer(new SpriteRenderer(m_materials[materialIndex], tileNumber));
 
         float x = (j * 0.5) + (-i * 0.5);
         float y = (-i * 0.5) - (x * 0.5);
