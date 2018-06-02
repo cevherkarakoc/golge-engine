@@ -13,9 +13,6 @@ TileMapRenderer::TileMapRenderer(Tilemap::SharedPtr tilemap, std::vector<Materia
   m_materials = materials;
 }
 
-/**
- * TODO : ADD Multi Material Support
- */
 void TileMapRenderer::init()
 {
   int materialIndex = 0;
