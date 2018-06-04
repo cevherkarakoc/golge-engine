@@ -52,6 +52,8 @@ auto zombie = Entity::create("zombie");
 
 /**
 	* TODO: ADD Mouse Event Handler
+	* TODO: ADD Material  Color
+	* TODO: Single Ray to find entity on screen 
 */
 
 int main(void)
