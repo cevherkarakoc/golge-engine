@@ -18,7 +18,7 @@
 # Compiled Dynamic libraries
 *.so
 *.dylib
-*.dll
+
 
 # Fortran module files
 *.mod
@@ -27,7 +27,7 @@
 # Compiled Static libraries
 *.lai
 *.la
-*.a
+
 *.lib
 
 # Executables
@@ -48,7 +48,9 @@ CTestTestfile.cmake
 build
 
 ### VisualStudioCode ###
-.vscode/*
+.vscode/
+!.vscode/tasks.json
+
 
 
 # End of https://www.gitignore.io/api/c++,cmake,visualstudiocode

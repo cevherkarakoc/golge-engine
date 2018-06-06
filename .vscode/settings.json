@@ -59,7 +59,8 @@
     "numeric": "cpp",
     "sstream": "cpp",
     "valarray": "cpp",
-    "unordered_map": "cpp"
+    "unordered_map": "cpp",
+    "deque": "cpp"
   },
   "C_Cpp.intelliSenseEngineFallback": "Enabled"
 }
