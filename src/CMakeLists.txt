@@ -14,5 +14,5 @@ add_executable (Golge ${golge_SRC} ${golge_CORE} ${golge_GAME} ${golge_GAME_COMP
 
 set_target_properties(Golge PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin/)
 
-target_link_libraries(Golge ${OPENGL_LIBRARIES} glfw3dll)
+target_link_libraries(Golge ${OPENGL_LIBRARIES} glfw3dll Box2Ddll)
 
