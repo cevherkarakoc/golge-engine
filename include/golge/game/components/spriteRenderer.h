@@ -23,6 +23,9 @@ public:
   void setTileNumber(float tileNumber);
   void setOrder(float order);
 
+  void static staticInit();
+  static Mesh::UniquePtr SQUARE_MESH;
+
 private:
   Material::SharedPtr m_material;
   float m_tileNumber;

@@ -28,19 +28,7 @@ void SpriteRenderer::update()
   m_material->updateTileNumber(m_tileNumber);
   m_material->getShader()->setFloat("order", m_order);
 
-  Vertex vsa[4] = {
-      {vec3(-0.5, -0.5, 0), vec2(0, 1)},
-      {vec3(0.5, -0.5, 0), vec2(1, 1)},
-      {vec3(0.5, 0.5, 0), vec2(1, 0)},
-      {vec3(-0.5, 0.5, 0), vec2(0, 0)}};
-  std::vector<Vertex> vs(vsa, vsa + 4);
-
-  unsigned int uia[6] = {0, 1, 2, 0, 2, 3};
-  std::vector<unsigned int> inds(uia, uia + 6);
-
-  Mesh::UniquePtr sMesh(new Mesh(vs, inds));
-
-  sMesh->draw();
+  SQUARE_MESH->draw();
 }
 
 std::string SpriteRenderer::getName() const
@@ -57,3 +45,23 @@ void SpriteRenderer::setOrder(float order)
 {
   m_order = order;
 }
+
+void SpriteRenderer::staticInit()
+{
+  Vertex vsa[4] = {
+      {vec3(-0.5, -0.5, 0), vec2(0, 1)},
+      {vec3(0.5, -0.5, 0), vec2(1, 1)},
+      {vec3(0.5, 0.5, 0), vec2(1, 0)},
+      {vec3(-0.5, 0.5, 0), vec2(0, 0)}};
+  std::vector<Vertex> vs(vsa, vsa + 4);
+
+  unsigned int uia[6] = {0, 1, 2, 0, 2, 3};
+  std::vector<unsigned int> inds(uia, uia + 6);
+  Mesh msh(vs, inds);
+
+  Mesh::UniquePtr sMesh(new Mesh(vs, inds));
+
+  SQUARE_MESH = std::move(sMesh);
+}
+
+Mesh::UniquePtr SpriteRenderer::SQUARE_MESH = nullptr;

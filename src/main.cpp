@@ -92,6 +92,8 @@ int main(void)
 	
 	std::cout << "OPENGL VERSION : " << glGetString(GL_VERSION) << std::endl;
 
+	SpriteRenderer::staticInit();
+
 	float lastFrame = 0.0f;
 
 	// Textures

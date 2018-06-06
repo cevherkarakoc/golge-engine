@@ -57,3 +57,5 @@ build
 
 
 # End of https://www.gitignore.io/api/c++,cmake,visualstudiocode
+.vscode/settings.json
+.vscode/settings.json
