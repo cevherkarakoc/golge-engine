@@ -2,7 +2,7 @@
 
 Golge is a game engine to create 2d isometric games.
 
-__This is experimental.__
+__This is an experimental work.__
 
 ## Videos 
 
