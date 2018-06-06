@@ -32,8 +32,8 @@ using namespace golge;
 using glm::mat4;
 using glm::vec3;
 
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int SCR_WIDTH = 1280;
+const unsigned int SCR_HEIGHT = 720;
 const float TARGET_FPS = 60.0;
 const float FRAME_TIME = 1.0 / TARGET_FPS;
 
@@ -66,10 +66,10 @@ int main(void)
 		return -1;
 
 	/* Create a windowed mode window and its OpenGL context */
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 
-	window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Hello World", NULL, NULL);
+	window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Golge Test", NULL, NULL);
 	if (!window)
 	{
 		glfwTerminate();
