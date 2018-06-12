@@ -7,6 +7,8 @@
 #include <unordered_map>
 #include <vector>
 
+#include "Box2D/Box2D.h"
+
 #include <golge/game/entity.h>
 #include <golge/core/material.h>
 #include <golge/core/camera.h>
@@ -27,21 +29,31 @@ public:
 
   static SharedPtr create();
 
+  Scene();
+  virtual ~Scene();
+  Scene(const Scene &other);
+  Scene &operator=(const Scene &other);
+
   void init();
-  void update();
+  void update(float deltaTime);
   void addEntity(EntitySharedPtr newEntity);
   void setActiveCamera(Camera::SharedPtr camera);
   void setLights(LightVector lights);
+  void setPhysic(bool physic);
   EntitySharedPtr find(const std::string &name) const;
 
   inline Camera::SharedPtr getActiveCamera() const { return m_camera; }
   inline LightVector getLights() const { return m_lights; }
+  inline b2World *getWorld() const { return m_world; }
 
 private:
   Camera::SharedPtr m_camera;
   LightVector m_lights;
   std::list<std::string> m_addingOrder;
   EntityMap m_graph;
+
+  bool m_physic = false;
+  b2World *m_world;
 };
 } // namespace golge
 
