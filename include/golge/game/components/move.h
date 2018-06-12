@@ -10,10 +10,11 @@ class Move : public Component
 public:
   Move();
   void init();
-  void update();
+  void update(float deltaTime);
   std::string getName() const;
 
 private:
+  float m_speed = 50.0;
 };
 } // namespace golge
 

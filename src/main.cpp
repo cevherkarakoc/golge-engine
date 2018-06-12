@@ -154,14 +154,7 @@ int main(void)
 	mainScene->setPhysic(true);
 	mainScene->init();
 
-	//Box2d Test
-
-	b2PolygonShape box;
-	box.SetAsBox(50.0f, 10.0f);
-	//
-
 	glClearColor(0.70f, 0.85f, 0.95f, 1.0f);
-	float counter = 0.0;
 	while (!glfwWindowShouldClose(window))
 	{
 		double currentFrame = glfwGetTime();
@@ -177,12 +170,6 @@ int main(void)
 			processInput(window);
 			
 			mainScene->update(deltaTime);
-
-			//b2Vec2 position = body->GetPosition();
-
-			//std::dynamic_pointer_cast<TransformComponent>(transformC)->getTransform()->setPosition(position.x, position.y);
-			//std::dynamic_pointer_cast<TransformComponent>(transformC)->getTransform()->setRotation(counter);
-			counter += 0.1;
 
 			glfwSwapBuffers(window);
 			
