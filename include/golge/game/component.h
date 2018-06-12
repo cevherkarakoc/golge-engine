@@ -17,7 +17,7 @@ public:
   using SharedPtr = std::shared_ptr<Component>;
 
   virtual void init() = 0;
-  virtual void update() = 0;
+  virtual void update(float deltaTime) = 0;
   virtual std::string getName() const = 0;
 
   inline void setEntity(EntitySharedPtr entity) { m_entity = entity; }

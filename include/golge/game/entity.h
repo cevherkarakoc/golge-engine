@@ -28,7 +28,7 @@ public:
 
   Entity(const std::string &name);
   void init();
-  void update();
+  void update(float deltaTime);
   void addComponent(ComponentSharedPtr newComponent);
   void setScene(SceneSharedPtr scene);
   void setParent(SharedPtr parent);

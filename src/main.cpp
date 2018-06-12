@@ -1,6 +1,6 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-//#include <Box2D/Box2D.h>
+#include <Box2D/Box2D.h>
 #include <memory>
 #include <iostream>
 #include <vector>
@@ -25,6 +25,7 @@
 #include <golge/game/components/transformComponent.h>
 #include <golge/game/components/spriteRenderer.h>
 #include <golge/game/components/tileMapRenderer.h>
+#include <golge/game/components/rigidBody.h>
 
 #include <golge/game/components/move.h>
 
@@ -132,6 +133,7 @@ int main(void)
 	// Components
 	Component::SharedPtr transformC(new TransformComponent());
 	Component::SharedPtr rendererC(new SpriteRenderer(matZombie, 0.0));
+	Component::SharedPtr rigidC(new RigidBody());
 	Component::SharedPtr move( new Move() );
 
 	Component::SharedPtr transform(new TransformComponent());
@@ -144,11 +146,19 @@ int main(void)
 	zombie->addComponent(transformC);
 	zombie->addComponent(rendererC);
 	zombie->addComponent(move);
+	zombie->addComponent(rigidC);
 
 	tile->addComponent(transform);
 	tile->addComponent(renderer);
 
+	mainScene->setPhysic(true);
 	mainScene->init();
+
+	//Box2d Test
+
+	b2PolygonShape box;
+	box.SetAsBox(50.0f, 10.0f);
+	//
 
 	glClearColor(0.70f, 0.85f, 0.95f, 1.0f);
 	float counter = 0.0;
@@ -166,8 +176,11 @@ int main(void)
 
 			processInput(window);
 			
-			mainScene->update();
+			mainScene->update(deltaTime);
 
+			//b2Vec2 position = body->GetPosition();
+
+			//std::dynamic_pointer_cast<TransformComponent>(transformC)->getTransform()->setPosition(position.x, position.y);
 			//std::dynamic_pointer_cast<TransformComponent>(transformC)->getTransform()->setRotation(counter);
 			counter += 0.1;
 
@@ -175,6 +188,8 @@ int main(void)
 			
 			glfwPollEvents();
 		}
+		
+		
 	}
 
 	glfwTerminate();

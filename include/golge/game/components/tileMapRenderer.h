@@ -18,7 +18,7 @@ class TileMapRenderer : public Component
 public:
   TileMapRenderer(Tilemap::SharedPtr tilemap, std::vector<Material::SharedPtr> materials);
   void init();
-  void update();
+  void update(float deltaTime);
   std::string getName() const;
 private:
   Tilemap::SharedPtr m_tilemap;

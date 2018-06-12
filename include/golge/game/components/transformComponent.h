@@ -16,7 +16,7 @@ class TransformComponent : public Component
 public:
   TransformComponent();
   void init(){}
-  void update();
+  void update(float deltaTime);
   std::string getName() const;
   glm::mat4 getModelMatrix() const;
 

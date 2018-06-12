@@ -4,6 +4,7 @@
 
 #include <golge/game/inputManager.h>
 #include <golge/game/components/transformComponent.h>
+#include <golge/game/components/rigidBody.h>
 
 using namespace golge;
 
@@ -15,30 +16,27 @@ void Move::init() {
 
 }
 
-void Move::update() {
+void Move::update(float deltaTime) {
   auto transform = m_entity->find<TransformComponent>("transform")->getTransform();
+	auto rigidBody = m_entity->find<RigidBody>("rigid_body");
+
   auto position = transform->getPosition();
 
 	glm::vec2 movementVertical(0.0, 0.0);
 	glm::vec2 movementHorizantal(0.0, 0.0);
 
-	if (InputManager::GetKey("UP") == 1.0)
-		movementVertical += glm::vec2(0.0, 0.01);
-	if (InputManager::GetKey("DOWN") == 1.0)
-		movementVertical += glm::vec2(0.0, -0.01);
-	if (InputManager::GetKey("RIGHT") == 1.0)
-		movementHorizantal += glm::vec2(0.01, 0.0);
-	if (InputManager::GetKey("LEFT") == 1.0)
-		movementHorizantal += glm::vec2(-0.01, 0.0);
+	transform->setPosition(rigidBody->m_body->GetPosition().x, rigidBody->m_body->GetPosition().y);
 
-	position += movementVertical;
-	position += movementHorizantal;
+	float horizantal = InputManager::GetKey("RIGHT") * deltaTime * m_speed;
+	horizantal -= InputManager::GetKey("LEFT") * deltaTime * m_speed;
 
-	m_entity->getScene()->getActiveCamera()->moveUp(movementVertical.y);
-	m_entity->getScene()->getActiveCamera()->moveRight(movementHorizantal.x);
+	float vertical = InputManager::GetKey("UP") * deltaTime * m_speed * 0.5;
+	vertical -= InputManager::GetKey("DOWN") * deltaTime * m_speed * 0.5;
 
+	rigidBody->m_body->SetLinearVelocity(b2Vec2(horizantal, vertical));
 
-  transform->setPosition(position);
+	m_entity->getScene()->getActiveCamera()->moveUp(vertical * 0.01);
+	m_entity->getScene()->getActiveCamera()->moveRight(horizantal * 0.01);
 }
 
 std::string Move::getName() const

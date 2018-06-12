@@ -23,11 +23,11 @@ void Entity::init()
   }
 }
 
-void Entity::update()
+void Entity::update(float deltaTime)
 {
   for (auto const &pair : m_components)
   {
-    pair.second->update();
+    pair.second->update(deltaTime);
   }
 }
 

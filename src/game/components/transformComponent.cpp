@@ -9,7 +9,7 @@ TransformComponent::TransformComponent()
   m_transform = Transform::SharedPtr(new Transform());
 }
 
-void TransformComponent::update()
+void TransformComponent::update(float deltaTime)
 {
   m_modelMatrix = m_transform->getModelMatrix();
 }

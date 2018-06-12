@@ -17,7 +17,7 @@ void SpriteRenderer::init()
 {
 }
 
-void SpriteRenderer::update()
+void SpriteRenderer::update(float deltaTime)
 {
   auto model = m_entity->find<TransformComponent>("transform")->getModelMatrix();
   auto scene = m_entity->getScene();

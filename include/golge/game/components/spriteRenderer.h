@@ -18,7 +18,7 @@ class SpriteRenderer : public Component
 public:
   SpriteRenderer(Material::SharedPtr material, float tileNumber = 0.0);
   void init();
-  void update();
+  void update(float deltaTime);
   std::string getName() const;
   void setTileNumber(float tileNumber);
   void setOrder(float order);

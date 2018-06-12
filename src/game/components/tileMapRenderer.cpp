@@ -59,11 +59,11 @@ void TileMapRenderer::init()
   }
 }
 
-void TileMapRenderer::update()
+void TileMapRenderer::update(float deltaTime)
 {
   for (auto const &tile : m_tiles)
   {
-    tile->update();
+    tile->update(deltaTime);
   }
 }
 
