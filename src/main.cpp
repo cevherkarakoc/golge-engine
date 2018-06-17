@@ -44,7 +44,7 @@ void mouse_callback(GLFWwindow *window, double xpos, double ypos);
 void processInput(GLFWwindow *window);
 
 float deltaTime = 0.0f;																								// 1 1 0
-std::shared_ptr<Camera> camera(new Camera(vec3(0.0, 0.0, 10.0), vec3(0.0, 1.0, 0.0), 45.0f,
+std::shared_ptr<Camera> camera(new Camera(vec3(0.0, 0.0, 8.0), vec3(0.0, 1.0, 0.0), 45.0f,
 																					(float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f, -90.0f, 0.0f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
@@ -124,11 +124,13 @@ int main(void)
 	//Create Entities
 	//auto zombie = Entity::create("zombie");
 	auto tile = Entity::create("tile");
+	auto stz = Entity::create("stz");
 
 	//Add entities to the scene
 	
 	mainScene->addEntity(tile);
 	mainScene->addEntity(zombie);
+	mainScene->addEntity(stz);
 
 	// Components
 	Component::SharedPtr transformC(new TransformComponent());
@@ -136,10 +138,14 @@ int main(void)
 	Component::SharedPtr rigidC(new RigidBody());
 	Component::SharedPtr move( new Move() );
 
+	Component::SharedPtr transformS(new TransformComponent());
+	Component::SharedPtr rendererS(new SpriteRenderer(matZombie, 0.0));
+	Component::SharedPtr rigidS(new RigidBody());
+
 	Component::SharedPtr transform(new TransformComponent());
 	Component::SharedPtr renderer(new TileMapRenderer(testTilemap, tileMats));
 
-	std::dynamic_pointer_cast<TransformComponent>(transform)->getTransform()->setScale(1.0, 1.0);
+	std::dynamic_pointer_cast<TransformComponent>(transformS)->getTransform()->setPosition(1.0, 1.0);
 	//std::dynamic_pointer_cast<TransformComponent>(transform)->getTransform()->setRotation(-45.0);
 
 	//Adding Components
@@ -148,12 +154,16 @@ int main(void)
 	zombie->addComponent(move);
 	zombie->addComponent(rigidC);
 
+	stz->addComponent(transformS);
+	stz->addComponent(rendererS);
+	stz->addComponent(rigidS);
+
 	tile->addComponent(transform);
 	tile->addComponent(renderer);
 
 	mainScene->setPhysic(true);
 	mainScene->init();
-
+	
 	glClearColor(0.70f, 0.85f, 0.95f, 1.0f);
 	while (!glfwWindowShouldClose(window))
 	{
