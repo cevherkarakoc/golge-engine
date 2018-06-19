@@ -11,6 +11,7 @@ public:
   Move();
   void init();
   void update(float deltaTime);
+  void message(const Message &message);
   std::string getName() const;
 
 private:
