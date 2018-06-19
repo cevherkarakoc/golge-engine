@@ -1,6 +1,12 @@
 #include <golge/game/scene.h>
 
+#include <iostream>
+
+#include <golge/core/contactListener.h>
+
 using namespace golge;
+
+ContactListener theContactListener;
 
 Scene::SharedPtr Scene::create()
 {
@@ -33,6 +39,8 @@ void Scene::init()
 {
   b2Vec2 gravity(0.0f, 0.0f);
   m_world = new b2World(gravity);
+  theContactListener.setScene(Scene::SharedPtr(this));
+  m_world->SetContactListener(&theContactListener);
 
   for (auto const &name : m_addingOrder)
   {
@@ -49,6 +57,16 @@ void Scene::update(float deltaTime)
 
   if (m_physic)
     m_world->Step(deltaTime, 8, 3);
+}
+
+void Scene::sendMessage(const std::string &entity, const std::string &component, const Message &message) {
+  auto it = m_graph.find(entity);
+  if(it != m_graph.end()) it->second->sendMessage(component, message);
+}
+
+void Scene::sendMessage(const std::string &entity, const Message &message) {
+  auto it = m_graph.find(entity);
+  if(it != m_graph.end()) it->second->sendMessage(message);
 }
 
 void Scene::addEntity(Entity::SharedPtr newEntity)

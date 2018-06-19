@@ -7,6 +7,7 @@
 
 #include <golge/game/scene.h>
 #include <golge/game/component.h>
+#include <golge/core/messages.h>
 
 namespace golge
 {
@@ -29,6 +30,8 @@ public:
   Entity(const std::string &name);
   void init();
   void update(float deltaTime);
+  void sendMessage(const std::string &component, const Message &message);
+  void sendMessage(const Message &message);
   void addComponent(ComponentSharedPtr newComponent);
   void setScene(SceneSharedPtr scene);
   void setParent(SharedPtr parent);

@@ -1,5 +1,7 @@
 #include <golge/game/entity.h>
 
+#include <iostream>
+
 #include <golge/game/components/transformComponent.h>
 
 using namespace golge;
@@ -28,6 +30,21 @@ void Entity::update(float deltaTime)
   for (auto const &pair : m_components)
   {
     pair.second->update(deltaTime);
+  }
+}
+
+void Entity::sendMessage(const std::string &component, const Message &message)
+{
+  auto it = m_components.find(component);
+  if (it != m_components.end())
+    it->second->message(message);
+}
+
+void Entity::sendMessage(const Message &message)
+{
+  for (auto const &pair : m_components)
+  {
+    pair.second->message(message);
   }
 }
 

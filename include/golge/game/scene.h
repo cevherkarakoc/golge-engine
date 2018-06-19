@@ -12,6 +12,7 @@
 #include <golge/game/entity.h>
 #include <golge/core/material.h>
 #include <golge/core/camera.h>
+#include <golge/core/messages.h>
 
 namespace golge
 {
@@ -36,6 +37,8 @@ public:
 
   void init();
   void update(float deltaTime);
+  void sendMessage(const std::string &entity, const std::string &component, const Message &message);
+  void sendMessage(const std::string &entity, const Message &message);
   void addEntity(EntitySharedPtr newEntity);
   void setActiveCamera(Camera::SharedPtr camera);
   void setLights(LightVector lights);

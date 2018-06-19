@@ -5,6 +5,7 @@
 #include <string>
 
 #include <golge/game/entity.h>
+#include <golge/core/messages.h>
 
 namespace golge
 {
@@ -18,6 +19,7 @@ public:
 
   virtual void init() = 0;
   virtual void update(float deltaTime) = 0;
+  virtual void message(const Message &message){}
   virtual std::string getName() const = 0;
 
   inline void setEntity(EntitySharedPtr entity) { m_entity = entity; }
