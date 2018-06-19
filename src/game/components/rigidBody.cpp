@@ -20,6 +20,7 @@ void RigidBody::init() {
 
 	m_body = m_entity->getScene()->getWorld()->CreateBody(&bodyDef);
 
+  m_body->SetUserData( &m_entity );
 
   b2PolygonShape shape;
   shape.SetAsBox(0.05f, 0.05f);
