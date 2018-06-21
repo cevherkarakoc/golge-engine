@@ -23,7 +23,9 @@ Tilemap::Tilemap(const std::string &fileName)
   m_height = mapJson["height"];
 
   for(auto const& layer: mapJson["layers"]) {
-    m_layers.push_back( layer["data"] );
+    if(layer["type"] == "tilelayer")
+      m_layers.push_back( layer["data"] );
+
   }
 
   for(auto const& tileset: mapJson["tilesets"]) {
