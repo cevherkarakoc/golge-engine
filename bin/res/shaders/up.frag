@@ -14,6 +14,7 @@ uniform float tileNumber;
 uniform float order;
 
 in vec2 texCoord;
+in vec2 orginalTexCoord;
 in vec3 fragPos;
 
 out vec4 FragColor;
@@ -26,6 +27,6 @@ void main() {
     discard;
   }
 
-  FragColor = tex;
+    FragColor = tex;
   //FragColor = vec4(vec3(gl_FragDepth), 1.0);
 }

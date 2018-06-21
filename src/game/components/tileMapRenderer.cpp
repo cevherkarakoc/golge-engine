@@ -4,7 +4,6 @@
 
 #include <golge/game/components/transformComponent.h>
 #include <golge/game/components/spriteRenderer.h>
-#include <golge/game/components/rigidBody.h>
 
 using namespace golge;
 

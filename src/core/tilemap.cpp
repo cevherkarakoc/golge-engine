@@ -25,7 +25,6 @@ Tilemap::Tilemap(const std::string &fileName)
   for(auto const& layer: mapJson["layers"]) {
     if(layer["type"] == "tilelayer")
       m_layers.push_back( layer["data"] );
-
   }
 
   for(auto const& tileset: mapJson["tilesets"]) {

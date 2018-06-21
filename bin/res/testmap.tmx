@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.5" orientation="isometric" renderorder="right-down" width="10" height="10" tilewidth="256" tileheight="128" infinite="0" nextobjectid="1">
+<map version="1.0" tiledversion="1.1.5" orientation="isometric" renderorder="right-down" width="10" height="10" tilewidth="256" tileheight="128" infinite="0" nextobjectid="7">
  <tileset firstgid="1" source="testset.tsx"/>
  <tileset firstgid="5" source="blue.tsx"/>
+ <objectgroup name="Nesne Katmanı 1">
+  <object id="6" x="-32" y="-18" width="40" height="1300"/>
+ </objectgroup>
  <layer name="Desen Katmanı 1" width="10" height="10">
   <data encoding="csv">
 1,1,1,1,1,1,1,1,1,1,

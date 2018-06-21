@@ -14,8 +14,8 @@ Scene::SharedPtr Scene::create()
   return scene;
 }
 
-Scene::Scene() {
-
+Scene::Scene()
+{
 }
 
 Scene::~Scene()
@@ -28,7 +28,7 @@ Scene::Scene(const Scene &other)
   b2World *world = other.m_world;
   m_world = world;
 }
-Scene& Scene::operator=(const Scene &other)
+Scene &Scene::operator=(const Scene &other)
 {
   delete m_world;
   m_world = other.getWorld();
@@ -59,14 +59,18 @@ void Scene::update(float deltaTime)
     m_world->Step(deltaTime, 8, 3);
 }
 
-void Scene::sendMessage(const std::string &entity, const std::string &component, const Message &message) {
+void Scene::sendMessage(const std::string &entity, const std::string &component, const Message &message)
+{
   auto it = m_graph.find(entity);
-  if(it != m_graph.end()) it->second->sendMessage(component, message);
+  if (it != m_graph.end())
+    it->second->sendMessage(component, message);
 }
 
-void Scene::sendMessage(const std::string &entity, const Message &message) {
+void Scene::sendMessage(const std::string &entity, const Message &message)
+{
   auto it = m_graph.find(entity);
-  if(it != m_graph.end()) it->second->sendMessage(message);
+  if (it != m_graph.end())
+    it->second->sendMessage(message);
 }
 
 void Scene::addEntity(Entity::SharedPtr newEntity)
