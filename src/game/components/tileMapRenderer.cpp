@@ -4,6 +4,7 @@
 
 #include <golge/game/components/transformComponent.h>
 #include <golge/game/components/spriteRenderer.h>
+#include <golge/game/components/rigidBody.h>
 
 using namespace golge;
 
@@ -52,6 +53,7 @@ void TileMapRenderer::init()
         tile->addComponent(renderer);
         tile->setParent(m_entity);
         tile->setScene(m_entity->getScene());
+        tile->init();
 
         m_tiles.push_back(tile);
       }
