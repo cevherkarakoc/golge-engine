@@ -135,12 +135,12 @@ int main(void)
 	// Components
 	Component::SharedPtr transformC(new TransformComponent());
 	Component::SharedPtr rendererC(new SpriteRenderer(matZombie, 0.0));
-	Component::SharedPtr rigidC(new RigidBody());
+	Component::SharedPtr rigidC(new RigidBody(b2_dynamicBody, 0.05f, 0.05f, 0.0f, -0.2f));
 	Component::SharedPtr move( new Move() );
 
 	Component::SharedPtr transformS(new TransformComponent());
 	Component::SharedPtr rendererS(new SpriteRenderer(matZombie, 0.0));
-	Component::SharedPtr rigidS(new RigidBody());
+	Component::SharedPtr rigidS(new RigidBody(b2_staticBody, 0.05f, 0.05f));
 
 	Component::SharedPtr transform(new TransformComponent());
 	Component::SharedPtr renderer(new TileMapRenderer(testTilemap, tileMats));
