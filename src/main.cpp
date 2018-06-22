@@ -4,7 +4,6 @@
 #include <memory>
 #include <iostream>
 #include <vector>
-#include <string> 
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -89,9 +88,9 @@ int main(void)
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
-	//glEnable(GL_CULL_FACE);
-	//glEnable(GL_BLEND);
-	//glBlendFunc(GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA  );
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA  );
 	
 	std::cout << "OPENGL VERSION  : " << glGetString(GL_VERSION) << std::endl;
 	std::cout << "OPENGL VENDOR   : " << glGetString(GL_VENDOR) << std::endl;
@@ -127,7 +126,6 @@ int main(void)
 
 	//Create Entities
 	//auto zombie = Entity::create("zombie");
-	
 	auto tile = Entity::create("tile");
 	auto stz = Entity::create("stz");
 
