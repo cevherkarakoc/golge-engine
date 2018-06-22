@@ -54,6 +54,7 @@ private:
   LightVector m_lights;
   std::list<std::string> m_addingOrder;
   EntityMap m_graph;
+  std::vector<EntitySharedPtr> m_entities;
 
   bool m_physic = false;
   b2World *m_world;

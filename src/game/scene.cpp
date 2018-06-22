@@ -42,17 +42,17 @@ void Scene::init()
   theContactListener.setScene(Scene::SharedPtr(this));
   m_world->SetContactListener(&theContactListener);
 
-  for (auto const &name : m_addingOrder)
+  for (auto const &entity : m_entities)
   {
-    find(name)->init();
+    entity->init();
   }
 }
 
 void Scene::update(float deltaTime)
 {
-  for (auto const &name : m_addingOrder)
+  for (auto const &entity : m_entities)
   {
-    find(name)->update(deltaTime);
+    entity->update(deltaTime);
   }
 
   if (m_physic)
@@ -76,8 +76,10 @@ void Scene::sendMessage(const std::string &entity, const Message &message)
 void Scene::addEntity(Entity::SharedPtr newEntity)
 {
   newEntity->setScene(shared_from_this());
-  m_addingOrder.push_back(newEntity->getName());
+  //m_addingOrder.push_back(newEntity->getName());
   m_graph.insert(EntityPair(newEntity->getName(), newEntity));
+
+  m_entities.push_back(newEntity);
 }
 
 void Scene::setActiveCamera(Camera::SharedPtr camera)

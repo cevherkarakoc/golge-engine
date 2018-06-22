@@ -3,8 +3,6 @@
 #include <vector>
 #include <iostream>
 
-#include <golge/game/components/transformComponent.h>
-
 using namespace golge;
 
 SpriteRenderer::SpriteRenderer(Material::SharedPtr material, float tileNumber)
@@ -15,18 +13,19 @@ SpriteRenderer::SpriteRenderer(Material::SharedPtr material, float tileNumber)
 
 void SpriteRenderer::init()
 {
+  m_transform = m_entity->find<TransformComponent>("transform");
 }
 
 void SpriteRenderer::update(float deltaTime)
 {
-  auto model = m_entity->find<TransformComponent>("transform")->getModelMatrix();
+  auto model = m_transform->getModelMatrix();
   auto scene = m_entity->getScene();
   auto camera = scene->getActiveCamera();
 
-  m_material->use(camera);
-  m_material->model(model);
-  m_material->updateTileNumber(m_tileNumber);
-  m_material->getShader()->setFloat("order", m_order);
+  m_material->use(camera); 
+  m_material->model(model); 
+  m_material->updateTileNumber(m_tileNumber); 
+  m_material->updateOrder(m_order);
 
   SQUARE_MESH->draw();
 }

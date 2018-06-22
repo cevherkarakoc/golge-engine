@@ -19,39 +19,40 @@ Entity::Entity(const std::string &name)
 
 void Entity::init()
 {
-  for (auto const &pair : m_components)
+  for (auto const &component : m_components)
   {
-    pair.second->init();
+    component->init();
   }
 }
 
 void Entity::update(float deltaTime)
 {
-  for (auto const &pair : m_components)
+  for (auto const &component : m_components)
   {
-    pair.second->update(deltaTime);
+    component->update(deltaTime);
   }
 }
 
 void Entity::sendMessage(const std::string &component, const Message &message)
 {
-  auto it = m_components.find(component);
-  if (it != m_components.end())
+  auto it = m_componentsMap.find(component);
+  if (it != m_componentsMap.end())
     it->second->message(message);
 }
 
 void Entity::sendMessage(const Message &message)
 {
-  for (auto const &pair : m_components)
+  for (auto const &component : m_components)
   {
-    pair.second->message(message);
+    component->message(message);
   }
 }
 
 void Entity::addComponent(Component::SharedPtr newComponent)
 {
   newComponent->setEntity(shared_from_this());
-  m_components.insert(CompPair(newComponent->getName(), newComponent));
+  m_components.push_back(newComponent);
+  m_componentsMap.insert(CompPair(newComponent->getName(), newComponent));
 }
 
 void Entity::setScene(Scene::SharedPtr scene)

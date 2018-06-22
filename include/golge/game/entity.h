@@ -39,7 +39,7 @@ public:
   template <class ComponentClass>
   std::shared_ptr<ComponentClass> find(const std::string &name) const
   {
-    auto component = m_components.find(name)->second;
+    auto component = m_componentsMap.find(name)->second;
     return std::dynamic_pointer_cast<ComponentClass>(component);
   }
 
@@ -51,7 +51,8 @@ private:
   SceneSharedPtr m_scene;
   SharedPtr m_parent;
   std::string m_name;
-  CompMap m_components;
+  std::vector<ComponentSharedPtr> m_components;
+  CompMap m_componentsMap;
 };
 } // namespace golge
 
