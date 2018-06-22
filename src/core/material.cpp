@@ -33,3 +33,7 @@ void Material::use(Camera::SharedPtr camera) const {
 void Material::updateTileNumber(float tileNumber) const {
 	m_shader->updateTileNumber(tileNumber);
 }
+
+void Material::updateOrder(float order) const {
+	m_shader->updateOrder(order);
+}

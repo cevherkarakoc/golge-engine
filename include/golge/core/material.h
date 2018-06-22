@@ -45,6 +45,7 @@ public:
 	void model(mat4 modelMatrix);
 	void use(Camera::SharedPtr camera) const;
 	void updateTileNumber(float tileNumber) const;
+	void updateOrder(float order) const;
 
 	Shader::SharedPtr inline getShader() { return m_shader;};
 

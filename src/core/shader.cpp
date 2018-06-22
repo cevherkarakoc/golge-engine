@@ -34,6 +34,7 @@ Shader::Shader(const std::string& fileName) {
   m_normalLoc = glGetUniformLocation(m_program, "normalMatrix");
   m_columnCountLoc = glGetUniformLocation(m_program, "columnCount");
   m_tileNumberLoc = glGetUniformLocation(m_program, "tileNumber");
+  m_orderLoc = glGetUniformLocation(m_program, "order");
 }
 
 Shader::~Shader() {
@@ -51,9 +52,7 @@ void Shader::use() const{
 }
 
 void Shader::updateModel(const glm::mat4 model) const{
-  glm::mat3 normalMatrix(glm::transpose(glm::inverse(model)));
   glUniformMatrix4fv(m_modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-  glUniformMatrix3fv(m_normalLoc, 1, GL_FALSE, glm::value_ptr(normalMatrix));
 }
 
 void Shader::updateCamera(Camera::SharedPtr camera) const {
@@ -68,6 +67,10 @@ void Shader::updateColumnCount(float columnCount) const {
 
 void Shader::updateTileNumber(float tileNumber) const {
   glUniform1f(m_tileNumberLoc, tileNumber);
+}
+
+void Shader::updateOrder(float order) const {
+  glUniform1f(m_orderLoc, order);
 }
 
 void Shader::setInt(const std::string &name, int value) const {

@@ -24,6 +24,7 @@ public:
   void updateCamera(Camera::SharedPtr camera) const;
   void updateColumnCount(float columnCount) const;
   void updateTileNumber(float tileNumber) const;
+  void updateOrder(float order) const;
   void setInt(const std::string &name, int value) const;
   void setFloat(const std::string &name, float value) const;
   void setVec3(const std::string &name, float x, float y, float z) const;
@@ -51,6 +52,7 @@ private:
   GLuint m_normalLoc;
   GLuint m_columnCountLoc;
   GLuint m_tileNumberLoc;
+  GLuint m_orderLoc;
 };
 }
 
