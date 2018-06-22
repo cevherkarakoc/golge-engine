@@ -8,6 +8,8 @@
 #include <golge/core/mesh.h>
 #include <golge/core/material.h>
 
+#include <golge/game/components/transformComponent.h>
+
 using glm::vec2;
 using glm::vec3;
 
@@ -28,6 +30,7 @@ public:
 
 private:
   Material::SharedPtr m_material;
+  std::shared_ptr<TransformComponent> m_transform;
   float m_tileNumber;
   float m_order;
 };

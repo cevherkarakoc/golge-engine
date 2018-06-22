@@ -4,6 +4,7 @@
 #include <memory>
 #include <iostream>
 #include <vector>
+#include <string> 
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -67,8 +68,9 @@ int main(void)
 		return -1;
 
 	/* Create a windowed mode window and its OpenGL context */
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Golge Test", NULL, NULL);
 	if (!window)
@@ -87,11 +89,13 @@ int main(void)
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
-	glEnable(GL_CULL_FACE);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA  );
+	//glEnable(GL_CULL_FACE);
+	//glEnable(GL_BLEND);
+	//glBlendFunc(GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA  );
 	
-	std::cout << "OPENGL VERSION : " << glGetString(GL_VERSION) << std::endl;
+	std::cout << "OPENGL VERSION  : " << glGetString(GL_VERSION) << std::endl;
+	std::cout << "OPENGL VENDOR   : " << glGetString(GL_VENDOR) << std::endl;
+	std::cout << "OPENGL RENDERER : " << glGetString(GL_RENDERER ) << std::endl;
 
 	SpriteRenderer::staticInit();
 
@@ -123,6 +127,7 @@ int main(void)
 
 	//Create Entities
 	//auto zombie = Entity::create("zombie");
+	
 	auto tile = Entity::create("tile");
 	auto stz = Entity::create("stz");
 
@@ -160,7 +165,7 @@ int main(void)
 
 	tile->addComponent(transform);
 	tile->addComponent(renderer);
-
+	
 	mainScene->setPhysic(true);
 	mainScene->init();
 	
@@ -175,7 +180,7 @@ int main(void)
 			lastFrame = currentFrame;
 
 			clearInputs();
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
 			processInput(window);
 			

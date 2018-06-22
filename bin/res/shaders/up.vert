@@ -5,7 +5,6 @@ layout (location = 1) in vec2 aTexCoord;
 uniform mat4 modelMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 projectionMatrix;
-uniform mat3 normalMatrix;
 
 uniform float columnCount;
 uniform float tileNumber; 
