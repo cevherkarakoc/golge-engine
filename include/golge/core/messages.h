@@ -5,32 +5,38 @@
 
 namespace golge
 {
-  class Entity;
+class Entity;
 
-  enum class MessageType {
-    Test,
-    Collision,
-    Other
-  };
+enum class MessageType
+{
+  Test,
+  Collision,
+  Sound,
+  Other
+};
 
-  struct Message
+struct Message
+{
+  Message(MessageType mt)
   {
-    Message(MessageType mt) {
-      type = mt;
-    }
-    MessageType type;
-  };
+    type = mt;
+  }
+  MessageType type;
+};
 
-  
-  struct CollisionMessage : public Message
-  {
-    CollisionMessage() : Message(MessageType::Collision) {}
-    b2Contact *collision;
-    std::shared_ptr<Entity> entityA;
-    std::shared_ptr<Entity> entityB;
-  };
-  
+struct CollisionMessage : public Message
+{
+  CollisionMessage() : Message(MessageType::Collision) {}
+  b2Contact *collision;
+  Entity *entityA;
+  Entity *entityB;
+};
 
-} // golge
+struct SoundMessage : public Message
+{
+  SoundMessage() : Message(MessageType::Sound) {}
+};
+
+} // namespace golge
 
 #endif
