@@ -14,7 +14,6 @@ namespace golge
 class Scene;
 class Component;
 
-using SceneSharedPtr = std::shared_ptr<Scene>;
 using ComponentSharedPtr = std::shared_ptr<Component>;
 
 using CompMap = std::unordered_map<std::string, ComponentSharedPtr>;
@@ -28,13 +27,14 @@ public:
   static SharedPtr create(const std::string &name);
 
   Entity(const std::string &name);
+
   void init();
   void update(float deltaTime);
   void sendMessage(const std::string &component, const Message &message);
   void sendMessage(const Message &message);
   void addComponent(ComponentSharedPtr newComponent);
-  void setScene(SceneSharedPtr scene);
-  void setParent(SharedPtr parent);
+  void setScene(Scene *scene);
+  void setParent(Entity *parent);
 
   template <class ComponentClass>
   std::shared_ptr<ComponentClass> find(const std::string &name) const
@@ -44,12 +44,12 @@ public:
   }
 
   inline std::string getName() { return m_name; }
-  inline SceneSharedPtr getScene() { return m_scene; }
-  inline SharedPtr getParent() { return m_parent; }
+  Scene *getScene() const;
+  Entity *getParent() const;
 
 private:
-  SceneSharedPtr m_scene;
-  SharedPtr m_parent;
+  Scene *m_scene = nullptr;
+  Entity *m_parent = nullptr;
   std::string m_name;
   std::vector<ComponentSharedPtr> m_components;
   CompMap m_componentsMap;

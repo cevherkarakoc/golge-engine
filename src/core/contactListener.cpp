@@ -9,8 +9,8 @@ using namespace golge;
 
 void ContactListener::BeginContact(b2Contact *contact)
 {
-  auto entityA = *static_cast<Entity::SharedPtr*>(contact->GetFixtureA()->GetBody()->GetUserData());
-  auto entityB = *static_cast<Entity::SharedPtr*>(contact->GetFixtureB()->GetBody()->GetUserData());
+  auto entityA = *static_cast<Entity **>(contact->GetFixtureA()->GetBody()->GetUserData());
+  auto entityB = *static_cast<Entity **>(contact->GetFixtureB()->GetBody()->GetUserData());
 
   CollisionMessage message;
   message.collision = contact;
@@ -23,10 +23,9 @@ void ContactListener::BeginContact(b2Contact *contact)
 
 void ContactListener::EndContact(b2Contact *contact)
 {
-
 }
 
-void ContactListener::setScene(Scene::SharedPtr scene)
+void ContactListener::setScene(Scene *scene)
 {
   m_scene = scene;
 }

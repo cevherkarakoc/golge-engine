@@ -39,7 +39,7 @@ void Scene::init()
 {
   b2Vec2 gravity(0.0f, 0.0f);
   m_world = new b2World(gravity);
-  theContactListener.setScene(Scene::SharedPtr(this));
+  theContactListener.setScene(this);
   m_world->SetContactListener(&theContactListener);
 
   for (auto const &entity : m_entities)
@@ -75,10 +75,8 @@ void Scene::sendMessage(const std::string &entity, const Message &message)
 
 void Scene::addEntity(Entity::SharedPtr newEntity)
 {
-  newEntity->setScene(shared_from_this());
-  //m_addingOrder.push_back(newEntity->getName());
+  newEntity->setScene(this);
   m_graph.insert(EntityPair(newEntity->getName(), newEntity));
-
   m_entities.push_back(newEntity);
 }
 
@@ -101,4 +99,9 @@ Entity::SharedPtr Scene::find(const std::string &name) const
 {
   auto it = m_graph.find(name);
   return it->second;
+}
+
+b2World *Scene::getWorld() const
+{
+  return m_world;
 }

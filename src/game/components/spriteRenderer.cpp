@@ -26,7 +26,7 @@ void SpriteRenderer::update(float deltaTime)
   m_material->model(model); 
   m_material->updateTileNumber(m_tileNumber); 
   m_material->updateOrder(m_order);
-
+  
   SQUARE_MESH->draw();
 }
 

@@ -13,10 +13,10 @@ class ContactListener : public b2ContactListener
 public:
   void BeginContact(b2Contact *contact);
   void EndContact(b2Contact *contact);
-  void setScene(Scene::SharedPtr scene);
+  void setScene(Scene *scene);
 
 private:
-  Scene::SharedPtr m_scene;
+  Scene *m_scene = nullptr;
 };
 
 } // namespace golge

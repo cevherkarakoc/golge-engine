@@ -50,7 +50,7 @@ void Move::message(const Message &msg)
 			scale *= 2.0;
 		else
 			scale *= 0.5;
-			
+
 		transform->getTransform()->setScale(scale);
 		break;
 	}

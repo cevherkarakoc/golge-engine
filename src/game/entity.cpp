@@ -50,17 +50,26 @@ void Entity::sendMessage(const Message &message)
 
 void Entity::addComponent(Component::SharedPtr newComponent)
 {
-  newComponent->setEntity(shared_from_this());
+  newComponent->setEntity(this);
   m_components.push_back(newComponent);
   m_componentsMap.insert(CompPair(newComponent->getName(), newComponent));
 }
 
-void Entity::setScene(Scene::SharedPtr scene)
+void Entity::setScene(Scene *scene)
 {
   m_scene = scene;
 }
 
-void Entity::setParent(SharedPtr parent)
+void Entity::setParent(Entity *parent)
 {
   m_parent = parent;
+}
+
+Scene *Entity::getScene() const
+{
+  return m_scene;
+}
+Entity *Entity::getParent() const
+{
+  return m_parent;
 }

@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <string>
+#include <iostream>
 
 #include <golge/game/entity.h>
 #include <golge/core/messages.h>
@@ -10,7 +11,6 @@
 namespace golge
 {
 class Entity;
-using EntitySharedPtr = std::shared_ptr<Entity>;
 
 class Component
 {
@@ -22,9 +22,9 @@ public:
   virtual void message(const Message &message){}
   virtual std::string getName() const = 0;
 
-  inline void setEntity(EntitySharedPtr entity) { m_entity = entity; }
+  void setEntity(Entity *entity) { m_entity = entity; }
 protected:
-  EntitySharedPtr m_entity;
+  Entity *m_entity = nullptr;
 };
 }
 

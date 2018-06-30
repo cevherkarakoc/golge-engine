@@ -47,17 +47,16 @@ public:
 
   inline Camera::SharedPtr getActiveCamera() const { return m_camera; }
   inline LightVector getLights() const { return m_lights; }
-  inline b2World *getWorld() const { return m_world; }
-
+  b2World *getWorld() const;
+  
 private:
   Camera::SharedPtr m_camera;
   LightVector m_lights;
-  std::list<std::string> m_addingOrder;
   EntityMap m_graph;
   std::vector<EntitySharedPtr> m_entities;
 
   bool m_physic = false;
-  b2World *m_world;
+  b2World *m_world = nullptr;
 };
 } // namespace golge
 
