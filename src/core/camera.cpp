@@ -1,5 +1,7 @@
 #include <golge/core/camera.h>
 
+#include <iostream>
+
 #include <glm/gtc/matrix_transform.hpp>
 
 using namespace golge;
@@ -12,8 +14,19 @@ Camera::Camera(vec3 position, vec3 up, float fov, float aspect, float zNear, flo
   m_yaw = yaw;
   m_pitch = pitch;
 
-  m_projection = glm::perspective(fov, aspect, zNear, zFar);
+  m_fov = fov;
+  m_aspect = aspect;
+  m_zNear = zNear;
+  m_zFar = zFar;
+
+  m_projection = glm::perspective(m_fov, m_aspect, m_zNear, m_zFar);
   calculateVectors();
+}
+
+void Camera::changeAspectRatio(float aspect)
+{
+  m_aspect = aspect;
+  m_projection = glm::perspective(m_fov, m_aspect, m_zNear, m_zFar);
 }
 
 void Camera::setPosition(glm::vec3 position)

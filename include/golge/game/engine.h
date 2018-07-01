@@ -21,6 +21,8 @@ public:
   static void update();
   static void destroy();
 
+  static void toggleFullscreen();
+
   static unsigned int getScreenWidth();
   static unsigned int getScreenHeight();
   static float getTargetFps();
@@ -41,6 +43,7 @@ public:
 private:
   static SceneMap scenes;
 
+  static GLFWmonitor *monitor;
   static GLFWwindow *window;
   static std::function<void(GLFWwindow *)> processInput;
 
@@ -55,6 +58,12 @@ private:
   static Scene::SharedPtr activeScene;
 
   static void framebufferSizeCallback(GLFWwindow *window, int width, int height);
+
+  static bool fullscren;
+  static int lastWidth;
+  static int lastHeight;
+  static int lastPosX;
+  static int lastPosY;
 };
 } // namespace golge
 

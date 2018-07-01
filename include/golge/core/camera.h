@@ -21,6 +21,8 @@ public:
 
   inline vec3 getPosition() const { return m_position; };
 
+  void changeAspectRatio(float aspect);
+
   void setPosition(vec3 position);
   void setPosition(float x, float y, float z);
 
@@ -45,6 +47,11 @@ private:
   vec3 m_front;
   vec3 m_up;
   vec3 m_right;
+
+  float m_fov;
+  float m_aspect;
+  float m_zNear;
+  float m_zFar;
 
   float m_yaw;
   float m_pitch;
