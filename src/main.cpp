@@ -60,7 +60,8 @@ int main(void)
 																						(float)Engine::getScreenWidth() / (float)Engine::getScreenHeight(),
 																						0.1f, 100.0f, -90.0f, 0.0f));
 
-	SoundManager::loadSound("./res/Sound/canary.wav", "canary");
+	SoundManager::loadSound("./res/Sound/pat.ogg", "pat");
+	SoundManager::loadSound("./res/Sound/gun.ogg", "gun");
 
 	// Textures
 	auto texZombie = Texture::create("./res/zombie.png", 4.0);
@@ -83,6 +84,7 @@ int main(void)
 	auto testTilemap = Tilemap::create("./res/testmap.json");
 
 	//Create Scene
+
 	//auto mainScene = Scene::create();
 	mainScene->setActiveCamera(camera);
 
@@ -102,11 +104,12 @@ int main(void)
 	Component::SharedPtr rendererC(new SpriteRenderer(matZombie, 0.0));
 	Component::SharedPtr rigidC(new RigidBody(b2_dynamicBody, 0.05f, 0.05f, 0.0f, -0.2f));
 	Component::SharedPtr move(new Move());
-	Component::SharedPtr soundC(new Sound("canary"));
+	Component::SharedPtr soundC(new Sound("gun"));
 
 	Component::SharedPtr transformS(new TransformComponent());
 	Component::SharedPtr rendererS(new SpriteRenderer(matZombie, 0.0));
 	Component::SharedPtr rigidS(new RigidBody(b2_staticBody, 0.05f, 0.05f));
+	Component::SharedPtr soundS(new Sound("pat"));
 
 	Component::SharedPtr transform(new TransformComponent());
 	Component::SharedPtr renderer(new TileMapRenderer(testTilemap, tileMats));
@@ -124,6 +127,7 @@ int main(void)
 	stz->addComponent(transformS);
 	stz->addComponent(rendererS);
 	stz->addComponent(rigidS);
+	stz->addComponent(soundS);
 
 	tile->addComponent(transform);
 	tile->addComponent(renderer);
@@ -142,8 +146,8 @@ int main(void)
 
 int init()
 {
-	Engine::setScreenWidth(1280);
-	Engine::setScreenHeight(720);
+	Engine::setScreenWidth(800);
+	Engine::setScreenHeight(600);
 	Engine::setTargetFps(60.0);
 	Engine::setInputProcessor(processInput);
 
@@ -152,8 +156,11 @@ int init()
 
 void processInput(GLFWwindow *window)
 {
+
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
+	if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS)
+		Engine::toggleFullscreen();
 
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		InputManager::SetKey("UP", 1.0);
@@ -163,8 +170,8 @@ void processInput(GLFWwindow *window)
 		InputManager::SetKey("RIGHT", 1.0);
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
 		InputManager::SetKey("LEFT", 1.0);
-	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
-		mainScene->sendMessage("zombie", "sound", SoundMessage());
+	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
+		InputManager::SetKey("ACTION", 1.0);
 
 	/*
 float cameraSpeed = 2.5f * deltaTime;

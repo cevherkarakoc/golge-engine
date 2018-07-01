@@ -21,6 +21,7 @@ public:
   std::string getName() const;
 
 private:
+  bool m_play = false;
   sf::Sound m_sound;
 };
 } // namespace golge

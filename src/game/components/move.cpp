@@ -23,16 +23,19 @@ void Move::update(float deltaTime)
 	glm::vec2 movementVertical(0.0, 0.0);
 	glm::vec2 movementHorizantal(0.0, 0.0);
 
-	float horizantal = InputManager::GetKey("RIGHT") * deltaTime * m_speed;
-	horizantal -= InputManager::GetKey("LEFT") * deltaTime * m_speed;
+	float horizantal = InputManager::GetKey("RIGHT")  * m_speed;
+	horizantal -= InputManager::GetKey("LEFT")  * m_speed;
 
-	float vertical = InputManager::GetKey("UP") * deltaTime * m_speed * 0.5;
-	vertical -= InputManager::GetKey("DOWN") * deltaTime * m_speed * 0.5;
+	float vertical = InputManager::GetKey("UP") * m_speed * 0.5;
+	vertical -= InputManager::GetKey("DOWN") * m_speed * 0.5;
 
 	rigidBody->m_body->ApplyForceToCenter(b2Vec2(horizantal, vertical), true);
 
-	m_entity->getScene()->getActiveCamera()->moveUp(vertical * 0.01);
-	m_entity->getScene()->getActiveCamera()->moveRight(horizantal * 0.01);
+	m_entity->getScene()->getActiveCamera()->moveUp(vertical * deltaTime);
+	m_entity->getScene()->getActiveCamera()->moveRight(horizantal * deltaTime);
+
+	if(InputManager::GetKey("ACTION"))
+		m_entity->sendMessage("sound", SoundMessage());
 }
 
 void Move::message(const Message &msg)
@@ -42,16 +45,13 @@ void Move::message(const Message &msg)
 	case MessageType::Collision:
 		const CollisionMessage &collisionMsg = static_cast<const CollisionMessage &>(msg);
 
-		std::cout << collisionMsg.entityA->getName() << " x " << collisionMsg.entityB->getName() << std::endl;
+		SoundMessage soundMsg;
 
-		auto transform = m_entity->find<TransformComponent>("transform");
-		auto scale = transform->getTransform()->getScale();
-		if (scale.x < 2.0)
-			scale *= 2.0;
+		if(m_entity == collisionMsg.entityA)
+			collisionMsg.entityB->sendMessage("sound", soundMsg);
 		else
-			scale *= 0.5;
-
-		transform->getTransform()->setScale(scale);
+			collisionMsg.entityA->sendMessage("sound", soundMsg);
+	
 		break;
 	}
 }

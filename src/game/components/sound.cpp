@@ -20,6 +20,11 @@ void Sound::init()
 
 void Sound::update(float deltaTime)
 {
+  if (m_play)
+  {
+    m_sound.play();
+    m_play = false;
+  }
 }
 
 void Sound::message(const Message &msg)
@@ -27,7 +32,8 @@ void Sound::message(const Message &msg)
   switch (msg.type)
   {
   case MessageType::Sound:
-    m_sound.play();
+    if(m_sound.getStatus() != sf::Sound::Playing)
+      m_play = true;
     break;
   }
 }

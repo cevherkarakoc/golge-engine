@@ -15,7 +15,7 @@ public:
   std::string getName() const;
 
 private:
-  float m_speed = 100.0;
+  float m_speed = 1.0;
 };
 } // namespace golge
 
