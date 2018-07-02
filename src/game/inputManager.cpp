@@ -19,7 +19,7 @@ float InputManager::GetKey(std::string key)
 {
   auto it = m_keymap.find(key);
   if(it != m_keymap.end())
-    return m_keymap.find(key)->second;
+    return it->second;
   else
     return 0.0;
 }

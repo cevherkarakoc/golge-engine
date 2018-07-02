@@ -16,6 +16,7 @@
 #include <golge/core/material.h>
 #include <golge/core/tilemap.h>
 #include <golge/core/mesh.h>
+#include <golge/core/animation.h>
 
 #include <golge/game/scene.h>
 #include <golge/game/entity.h>
@@ -23,6 +24,7 @@
 #include <golge/game/soundManager.h>
 
 #include <golge/game/component.h>
+#include <golge/game/components/animator.h>
 #include <golge/game/components/transformComponent.h>
 #include <golge/game/components/spriteRenderer.h>
 #include <golge/game/components/tileMapRenderer.h>
@@ -60,20 +62,23 @@ int main(void)
 																						(float)Engine::getScreenWidth() / (float)Engine::getScreenHeight(),
 																						0.1f, 100.0f, -90.0f, 0.0f));
 
+	// Sounds
 	SoundManager::loadSound("./res/Sound/pat.ogg", "pat");
 	SoundManager::loadSound("./res/Sound/gun.ogg", "gun");
 
 	// Textures
+	auto texHero = Texture::create("./res/hero.png", 2.0);
 	auto texZombie = Texture::create("./res/zombie.png", 4.0);
 	auto texTileset = Texture::create("./res/testset.png", 2.0);
 	auto texTilesetBlue = Texture::create("./res/testsetBlue.png", 2.0);
-	std::cout << "Tileset : " << texTileset->getWidth() << " x " << texTileset->getHeight() << std::endl;
+	std::cout << "hero tex : " << texHero->getWidth() << " x " << texHero->getHeight() << std::endl;
 
 	//Shaders
 	auto upShader = Shader::create("./res/shaders/up");
 	auto basicShader = Shader::create("./res/shaders/basic");
 
 	//Materials
+	auto matHero = Material::create(upShader, texHero);
 	auto matZombie = Material::create(upShader, texZombie);
 	auto matTileset = Material::create(basicShader, texTileset);
 	auto matTilesetBlue = Material::create(basicShader, texTilesetBlue);
@@ -89,40 +94,45 @@ int main(void)
 	mainScene->setActiveCamera(camera);
 
 	//Create Entities
-	auto zombie = Entity::create("zombie");
+	auto hero = Entity::create("hero");
 	auto tile = Entity::create("tile");
 	auto stz = Entity::create("stz");
 
 	//Add entities to the scene
 
 	mainScene->addEntity(tile);
-	mainScene->addEntity(zombie);
+	mainScene->addEntity(hero);
 	mainScene->addEntity(stz);
 
 	// Components
 	Component::SharedPtr transformC(new TransformComponent());
-	Component::SharedPtr rendererC(new SpriteRenderer(matZombie, 0.0));
-	Component::SharedPtr rigidC(new RigidBody(b2_dynamicBody, 0.05f, 0.05f, 0.0f, -0.2f));
+	Component::SharedPtr rendererC(new SpriteRenderer(matHero, 0.0));
+	Component::SharedPtr animationC(new Animator(0.1, "idle", Animation::create(0.0, 0.0)));
+	Component::SharedPtr rigidC(new RigidBody(b2_dynamicBody, 0.2f, 0.2f));
 	Component::SharedPtr move(new Move());
 	Component::SharedPtr soundC(new Sound("gun"));
 
 	Component::SharedPtr transformS(new TransformComponent());
 	Component::SharedPtr rendererS(new SpriteRenderer(matZombie, 0.0));
-	Component::SharedPtr rigidS(new RigidBody(b2_staticBody, 0.05f, 0.05f));
+	Component::SharedPtr rigidS(new RigidBody(b2_staticBody, 0.05f, 0.05f, 0.0, -0.2));
 	Component::SharedPtr soundS(new Sound("pat"));
 
 	Component::SharedPtr transform(new TransformComponent());
 	Component::SharedPtr renderer(new TileMapRenderer(testTilemap, tileMats));
 
+	std::dynamic_pointer_cast<Animator>(animationC)->addAnimation("run", Animation::create(2.0, 3.0));
+
+	std::dynamic_pointer_cast<TransformComponent>(transformC)->getTransform()->setScale(0.4, 0.4);
 	std::dynamic_pointer_cast<TransformComponent>(transformS)->getTransform()->setPosition(1.0, 1.0);
 	//std::dynamic_pointer_cast<TransformComponent>(transform)->getTransform()->setRotation(-45.0);
 
 	//Adding Components
-	zombie->addComponent(transformC);
-	zombie->addComponent(rendererC);
-	zombie->addComponent(move);
-	zombie->addComponent(rigidC);
-	zombie->addComponent(soundC);
+	hero->addComponent(transformC);
+	hero->addComponent(rendererC);
+	hero->addComponent(animationC);
+	hero->addComponent(move);
+	hero->addComponent(rigidC);
+	hero->addComponent(soundC);
 
 	stz->addComponent(transformS);
 	stz->addComponent(rendererS);
@@ -173,8 +183,8 @@ void processInput(GLFWwindow *window)
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
 		InputManager::SetKey("ACTION", 1.0);
 
-	/*
-float cameraSpeed = 2.5f * deltaTime;
+	auto camera = mainScene->getActiveCamera();
+	float cameraSpeed = 2.5f * 1.0 / 60.0;
 	if (glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS)
 		camera->moveForward(cameraSpeed);
 	if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS)
@@ -187,7 +197,6 @@ float cameraSpeed = 2.5f * deltaTime;
 		camera->moveUp(cameraSpeed);
 	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
 		camera->moveUp(-cameraSpeed);
-		*/
 }
 
 /*

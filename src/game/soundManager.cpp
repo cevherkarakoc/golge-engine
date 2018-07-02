@@ -20,7 +20,7 @@ SoundManager::BufferSharedPtr SoundManager::getSoundBuffer(const std::string &ke
 {
   auto it = m_buffers.find(key);
   if (it != m_buffers.end())
-    return m_buffers.find(key)->second;
+    return it->second;
   else
     return nullptr;
 }

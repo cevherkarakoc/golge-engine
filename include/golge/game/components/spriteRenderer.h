@@ -21,6 +21,8 @@ public:
   SpriteRenderer(Material::SharedPtr material, float tileNumber = 0.0);
   void init();
   void update(float deltaTime);
+  void message(const Message &msg);
+
   std::string getName() const;
   void setTileNumber(float tileNumber);
   void setOrder(float order);

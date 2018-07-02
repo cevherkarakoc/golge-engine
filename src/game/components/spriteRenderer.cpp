@@ -22,12 +22,25 @@ void SpriteRenderer::update(float deltaTime)
   auto scene = m_entity->getScene();
   auto camera = scene->getActiveCamera();
 
-  m_material->use(camera); 
-  m_material->model(model); 
-  m_material->updateTileNumber(m_tileNumber); 
+  m_material->use(camera);
+  m_material->model(model);
+  m_material->updateTileNumber(m_tileNumber);
   m_material->updateOrder(m_order);
-  
+
   SQUARE_MESH->draw();
+}
+
+void SpriteRenderer::message(const Message &msg)
+{
+  switch (msg.type)
+  {
+  case MessageType::Animation:
+    const AnimationMessage &animationMsg = static_cast<const AnimationMessage &>(msg);
+
+    setTileNumber( animationMsg.tileNumber );
+
+    break;
+  }
 }
 
 std::string SpriteRenderer::getName() const
