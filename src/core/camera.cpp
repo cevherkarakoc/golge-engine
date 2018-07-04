@@ -32,11 +32,12 @@ void Camera::changeAspectRatio(float aspect)
 void Camera::setPosition(glm::vec3 position)
 {
   m_position = vec3(position);
+  calculateView();
 }
 
 void Camera::setPosition(float x, float y, float z)
 {
-  m_position = vec3(x, y, z);
+  setPosition(vec3(x, y, z));
 }
 
 void Camera::moveForward(float speed)

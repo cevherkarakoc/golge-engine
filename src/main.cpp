@@ -30,6 +30,7 @@
 #include <golge/game/components/tileMapRenderer.h>
 #include <golge/game/components/rigidBody.h>
 #include <golge/game/components/sound.h>
+#include <golge/game/components/cameraComponent.h>
 
 #include <golge/game/components/move.h>
 
@@ -94,23 +95,27 @@ int main(void)
 	mainScene->setActiveCamera(camera);
 
 	//Create Entities
+	auto cameraman = Entity::create("camera");
 	auto hero = Entity::create("hero");
 	auto tile = Entity::create("tile");
 	auto stz = Entity::create("stz");
 
 	//Add entities to the scene
-
-	mainScene->addEntity(tile);
+	mainScene->addEntity(cameraman);
 	mainScene->addEntity(hero);
+	mainScene->addEntity(tile);
 	mainScene->addEntity(stz);
 
 	// Components
 	Component::SharedPtr transformC(new TransformComponent());
-	Component::SharedPtr rendererC(new SpriteRenderer(matHero, 0.0));
-	Component::SharedPtr animationC(new Animator(0.1, "idle", Animation::create(0.0, 0.0)));
-	Component::SharedPtr rigidC(new RigidBody(b2_dynamicBody, 0.2f, 0.2f));
+	Component::SharedPtr cameraC(new CameraComponent(camera));
+
+	Component::SharedPtr transformH(new TransformComponent());
+	Component::SharedPtr rendererH(new SpriteRenderer(matHero, 0.0));
+	Component::SharedPtr animationH(new Animator(0.1, "idle", Animation::create(0.0, 0.0)));
+	Component::SharedPtr rigidH(new RigidBody(b2_dynamicBody, 0.2f, 0.2f));
 	Component::SharedPtr move(new Move());
-	Component::SharedPtr soundC(new Sound("gun"));
+	Component::SharedPtr soundH(new Sound("gun"));
 
 	Component::SharedPtr transformS(new TransformComponent());
 	Component::SharedPtr rendererS(new SpriteRenderer(matZombie, 0.0));
@@ -120,27 +125,34 @@ int main(void)
 	Component::SharedPtr transform(new TransformComponent());
 	Component::SharedPtr renderer(new TileMapRenderer(testTilemap, tileMats));
 
-	std::dynamic_pointer_cast<Animator>(animationC)->addAnimation("run", Animation::create(2.0, 3.0));
+	std::dynamic_pointer_cast<TransformComponent>(transformC)->getTransform()->setPosition(0.0, 0.0, 8.0);
 
-	std::dynamic_pointer_cast<TransformComponent>(transformC)->getTransform()->setScale(0.4, 0.4);
+	std::dynamic_pointer_cast<Animator>(animationH)->addAnimation("run", Animation::create(2.0, 3.0));
+
+	std::dynamic_pointer_cast<TransformComponent>(transformH)->getTransform()->setScale(0.4, 0.4);
 	std::dynamic_pointer_cast<TransformComponent>(transformS)->getTransform()->setPosition(1.0, 1.0);
 	//std::dynamic_pointer_cast<TransformComponent>(transform)->getTransform()->setRotation(-45.0);
 
 	//Adding Components
-	hero->addComponent(transformC);
-	hero->addComponent(rendererC);
-	hero->addComponent(animationC);
+	
+	cameraman->addComponent(cameraC);
+	cameraman->setParent(hero.get());
+	cameraman->addComponent(transformC);
+	
+	hero->addComponent(rendererH);
+	hero->addComponent(animationH);
 	hero->addComponent(move);
-	hero->addComponent(rigidC);
-	hero->addComponent(soundC);
+	hero->addComponent(rigidH);
+	hero->addComponent(soundH);
+	hero->addComponent(transformH);
 
 	stz->addComponent(transformS);
 	stz->addComponent(rendererS);
 	stz->addComponent(rigidS);
 	stz->addComponent(soundS);
 
-	tile->addComponent(transform);
 	tile->addComponent(renderer);
+	tile->addComponent(transform);
 
 	mainScene->setPhysic(true);
 

@@ -48,8 +48,9 @@ void TileMapRenderer::init()
         if(l > 0) order = y;
         std::dynamic_pointer_cast<SpriteRenderer>(renderer)->setOrder(order);
 
-        tile->addComponent(transform);
         tile->addComponent(renderer);
+        tile->addComponent(transform);
+
         tile->setParent(m_entity);
         tile->setScene(m_entity->getScene());
         tile->init();
