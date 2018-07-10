@@ -1,0 +1,7 @@
+namespace golge {
+
+#define GOLGE_VERSION_MAJOR @GOLGE_VERSION_MAJOR@
+#define GOLGE_VERSION_MINOR @GOLGE_VERSION_MINOR@
+#define GOLGE_VERSION_PATCH @GOLGE_VERSION_PATCH@
+
+} // namespace golge

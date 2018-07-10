@@ -8,9 +8,8 @@
 
 #include <golge/core/shader.h>
 #include <golge/core/texture.h>
-
-using glm::vec3;
 using glm::mat4;
+using glm::vec3;
 
 namespace golge
 {
@@ -47,12 +46,12 @@ public:
 	void updateTileNumber(float tileNumber) const;
 	void updateOrder(float order) const;
 
-	Shader::SharedPtr inline getShader() { return m_shader;};
+	Shader::SharedPtr inline getShader() { return m_shader; };
 
 private:
 	Shader::SharedPtr m_shader;
 	Texture::SharedPtr m_diffuse;
 };
-}
+} // namespace golge
 
 #endif

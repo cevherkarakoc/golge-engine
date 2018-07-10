@@ -3,11 +3,9 @@
 
 #include <memory>
 
-#include <glad/glad.h>
 #include <glm/glm.hpp>
-
-using glm::vec3;
 using glm::mat4;
+using glm::vec3;
 
 namespace golge
 {
@@ -33,7 +31,7 @@ public:
   void pitch(float angle);
   void yaw(float angle);
 
-  inline vec3 getFront() const {return m_front; }
+  inline vec3 getFront() const { return m_front; }
   inline mat4 getView() const { return m_view; }
   inline mat4 getProjection() const { return m_projection; }
   inline mat4 getViewProjection() const { return m_view * m_projection; }
@@ -60,5 +58,5 @@ private:
   mat4 m_projection;
 };
 
-}
+} // namespace golge
 #endif

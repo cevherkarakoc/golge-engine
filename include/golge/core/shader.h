@@ -54,6 +54,6 @@ private:
   GLuint m_tileNumberLoc;
   GLuint m_orderLoc;
 };
-}
+} // namespace golge
 
 #endif

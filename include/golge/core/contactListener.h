@@ -3,7 +3,7 @@
 
 #include <Box2D/Box2D.h>
 
-#include <golge/game/scene.h>
+#include <golge/engine/scene.h>
 
 namespace golge
 {

@@ -42,6 +42,6 @@ private:
 
 	void initMesh();
 };
-}
+} // namespace golge
 
 #endif

@@ -6,9 +6,9 @@
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 
+using glm::mat4;
 using glm::vec2;
 using glm::vec3;
-using glm::mat4;
 
 namespace golge
 {
@@ -40,7 +40,6 @@ private:
   GLfloat m_rotation;
   vec2 m_scale;
 };
-}
+} // namespace golge
 
 #endif
-

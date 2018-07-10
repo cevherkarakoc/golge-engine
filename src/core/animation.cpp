@@ -15,7 +15,12 @@ Animation::Animation(float start, float end)
   m_frame = start;
 }
 
-float Animation::nextFrame()
+float Animation::frame()
+{
+  return m_frame;
+}
+
+float Animation::next()
 {
   m_frame += 1.0;
   if (m_frame > m_end)

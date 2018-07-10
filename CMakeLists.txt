@@ -1,9 +1,13 @@
-﻿# CMakeList.txt : Top-level CMake project file, do global configuration
-# and include sub-projects here.
-#
+﻿
 cmake_minimum_required (VERSION 3.8)
 
 project ("GolgEngine")
+
+set(GOLGE_VERSION_MAJOR 0)
+set(GOLGE_VERSION_MINOR 1)
+set(GOLGE_VERSION_PATCH 0)
+set(GOLGE_VERSION_STRING ${GOLGE_VERSION_MAJOR}.${GOLGE_VERSION_MINOR}.${GOLGE_VERSION_PATCH})
+
 set(CMAKE_CXX_STANDARD 17)
 
 find_package(OpenGL REQUIRED)

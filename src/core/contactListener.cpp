@@ -1,9 +1,7 @@
 #include <golge/core/contactListener.h>
 
-#include <iostream>
-
 #include <golge/core/messages.h>
-#include <golge/game/entity.h>
+#include <golge/engine/entity.h>
 
 using namespace golge;
 

@@ -3,7 +3,6 @@
 
 #include <memory>
 #include <string>
-#include <vector>
 
 #include <glad/glad.h>
 
@@ -34,5 +33,5 @@ private:
   int m_height;
   float m_columnCount;
 };
-}
+} // namespace golge
 #endif

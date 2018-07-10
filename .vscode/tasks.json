@@ -10,9 +10,9 @@
       "args": [
         "-G",
         "\"MinGW Makefiles\"",
-        "-DCMAKE_BUILD_TYPE=DEBUG", 
+        "-DCMAKE_BUILD_TYPE=RELEASE", 
         "-H.",
-        "-BDebug"
+        "-Bbuild"
       ]
     },
     {
@@ -24,7 +24,7 @@
       "command": "mingw32-make",
       "args": [
         "-C",
-        "Debug"
+        "build"
       ],
       "group": {
         "kind": "build",

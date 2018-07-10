@@ -20,10 +20,11 @@ public:
   int inline getWidth() const { return m_width; };
   int inline getHeight() const { return m_height; };
   int inline getLayerCount() const { return m_layers.size(); };
+
 private:
   int m_width;
   int m_height;
-  std::vector<std::vector <int>> m_layers;
+  std::vector<std::vector<int>> m_layers;
   std::vector<int> m_firstIds;
 };
 

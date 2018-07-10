@@ -5,7 +5,7 @@
 
 namespace golge
 {
-  class Animation
+class Animation
 {
 public:
   using SharedPtr = std::shared_ptr<Animation>;
@@ -13,7 +13,8 @@ public:
   static SharedPtr create(float start, float end);
 
   Animation(float start, float end);
-  float nextFrame();
+  float frame();
+  float next();
 
 private:
   float m_start;
@@ -22,6 +23,6 @@ private:
   float m_frame;
   float m_time;
 };
-}
+} // namespace golge
 
 #endif
